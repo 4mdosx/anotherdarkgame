@@ -71,16 +71,11 @@ export default class Game {
     })
   }
 
-  snapShot () {
-    const snapShot = {
-      lastTick: this.lastTick,
-    }
+  valueOf () {
+    const payload = { lastTick: this.lastTick }
     Object.values(this.modules).forEach((module) => {
-      if (module.save) {
-        const moduleSnapshot = module.save()
-        snapShot[module.name] = moduleSnapshot
-      }
+      payload[module.name] = module.valueOf()
     })
-    return snapShot
+    return payload
   }
 }

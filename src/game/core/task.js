@@ -1,4 +1,5 @@
 import { buildings, Building } from '../schema/building'
+import { buildingIsExist } from '../interface'
 import _ from 'lodash'
 
 class Task {
@@ -58,15 +59,14 @@ export class TaskModule  {
             this.queue.shift()
             if (task.data.type === 'building') {
               this.context.dispatch({
-                type: 'task/finish',
-                task,
+                type: 'building/completed',
                 building: new Building({
                   status: 'normal',
                   name: task.data.schema,
                 })
               })
-              this.context.dispatch({ type: 'system/sync' })
             }
+            this.context.dispatch({ type: 'system/sync' })
           }
         }
         break
@@ -78,26 +78,27 @@ export class TaskModule  {
   doProposal (proposalId) {
     const proposal = this.modules.inventory.proposals.find(proposal => proposal.id === proposalId)
     if (this.queue.find(task => task.id === proposal.id)) return
+    this.context.dispatch({
+      type: 'inventory/removeProposal',
+      proposalId,
+    })
     this.queue.push(new Task({
       id: proposalId,
       type: proposal.type,
       schema: proposal.schema,
-      proposal: proposalId
+      proposal: proposalId,
+      is_upgrade: buildingIsExist(proposal.schema),
     }))
   }
 
-  get () {
-    return this.status
+  valueOf () {
+    return {
+      queue: this.queue.map(task => task.toJSON()),
+    }
   }
 
   init ({ task } = {}) {
     if (!task) return
     if (task.queue) this.queue = task.queue.map(t => new Task(t))
-  }
-
-  save () {
-    return {
-      queue: this.queue.map(task => task.toJSON()),
-    }
   }
 }

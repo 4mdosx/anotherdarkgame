@@ -1,10 +1,116 @@
-
-.simple_box
-  border-top: 2px solid #e5e7eb
-  box-sizing: border-box
+.button
+  display: flex
+  border: 1px solid #888
+  border-bottom-width: 4px
+  display: flex
+  cursor: pointer
+  padding: .3rem 0
+  border-radius: .25rem
+  width:  40%
   position: relative
-  .header
+  transition: background-color 1s ease-out
+  &:hover
+    background-color: #eee
+  &:active
+    border-bottom-width: 2px
+    top: 2px
+  .name
+    text-align: center
+    width: 100%
+  &:active
+    border-bottom-width: 2px
+    top: 2px
+
+.button.building
+  display: flex
+  .menu
+    width: 4rem
+    border-left: 1px solid #888
+    text-align: center
+    padding: 0 .2rem
+    &:hover
+      text-decoration: underline
+  .fuel-indicator
+    width: 100%
     position: absolute
-    top: -.8rem
-    background-color: #fff
-    padding: 0 .5rem
+    height: 2px
+    background-color: #fc5d5d
+    bottom: 0
+    transition: width .5s ease-in-out
+    box-shadow: 0 0 5px #fc5d5d, 0 0 25px #fc5d5d, 0 0 50px #fc5d5d, 0 0 200px #fc5d5d
+
+.button.building.bonfire
+  transition: transform ease-in 0.1s, box-shadow ease-in 0.25s
+  position: relative
+  &::before,
+  &::after
+    content: ""
+    position: absolute
+    display: none
+    width: 140%
+    height: 100%
+    left: -20%
+    z-index: -1000
+    transition: all ease-in-out 0.5s
+    background-repeat: no-repeat
+  &::before
+    top: -75%
+    background-image: radial-gradient(circle, #fc5d5d 20%, transparent 20%),radial-gradient(circle, transparent 20%, #fc5d5d 20%, transparent 30%),radial-gradient(circle, #fc5d5d 20%, transparent 20%),radial-gradient(circle, #fc5d5d 20%, transparent 20%),radial-gradient(circle, transparent 10%, #fc5d5d 15%, transparent 20%),radial-gradient(circle, #fc5d5d 20%, transparent 20%),radial-gradient(circle, #fc5d5d 20%, transparent 20%),radial-gradient(circle, #fc5d5d 20%, transparent 20%),radial-gradient(circle, #fc5d5d 20%, transparent 20%)
+    background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%,15% 15%, 10% 10%, 18% 18%
+  &::after
+    bottom: -85%
+    background-image: radial-gradient(circle, #fc5d5d 20%, transparent 20%),radial-gradient(circle, #fc5d5d 20%, transparent 20%),radial-gradient(circle, transparent 10%, #fc5d5d 15%, transparent 20%),radial-gradient(circle, #fc5d5d 20%, transparent 20%),radial-gradient(circle, #fc5d5d 20%, transparent 20%),radial-gradient(circle, #fc5d5d 20%, transparent 20%),radial-gradient(circle, #fc5d5d 20%, transparent 20%)
+    background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%,20% 20%
+  &.animated
+    &::before
+      display: block
+      animation: topBubbles ease-in-out 1s forwards
+    &::after
+      display: block
+      animation: bottomBubbles ease-in-out 1s forwards
+
+
+
+@keyframes topBubbles
+    0%
+      background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,40% 90%, 55% 90%, 70% 90%
+    50%
+      background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,50% 50%, 65% 20%, 90% 30%
+    100%
+      background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,50% 40%, 65% 10%, 90% 20%
+      background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%
+@keyframes bottomBubbles
+  0%
+    background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,70% -10%, 70% 0%
+  50%
+    background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%,105% 0%
+  100%
+    background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%,110% 10%
+    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%
+
+
+.button.resource
+  width: 90px
+
+.proposal-item
+  border: 1px dashed #888
+  border-radius: .25rem
+  padding: .5rem
+  margin-bottom: .2rem
+  display: flex
+  align-items: center
+  justify-content: space-between
+  text-transform: capitalize
+  button
+    margin-left: .5rem
+    width: 3rem
+    height: 2rem
+    border-radius: .25rem
+    border: 1px solid #888
+    cursor: pointer
+    &:hover
+      background-color: #eee
+    &:active
+      border-bottom-width: 2px
+      top: 2px
+

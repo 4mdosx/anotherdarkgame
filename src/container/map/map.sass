@@ -1,0 +1,30 @@
+.map-box
+  width: 400px
+  height: 400px
+  cursor: pointer
+  background-color: #ddd
+  overflow: scroll
+.map
+  padding-left: 200px
+  padding-bottom: 240px
+  position: relative
+  transform: rotateX(60deg)  rotateZ(45deg)
+  transform-origin: center center
+
+.row
+  display: flex
+  flex: 1
+  flex-shrink: 0
+.cell
+  cursor: pointer
+  border: 1px solid #ccc
+  min-width: 100px
+  height: 100px
+  &:nth-child(odd)
+    background: #eee
+  &:nth-child(even)
+    background: #fff
+  &:hover
+    scale: 1.1
+    translate: 0 -10px
+    box-shadow: 0 0 10px rgba(0,0,0,.5)

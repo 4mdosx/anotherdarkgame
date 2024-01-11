@@ -1,4 +1,5 @@
 import { materials } from "../schema/material"
+
 export class WorldModule  {
   name = 'world'
   constructor () {
@@ -7,6 +8,12 @@ export class WorldModule  {
 
   dispatch (action) {
     switch (action.type) {
+      case 'character/gathering':
+        this.map[action.position].resources[action.itemName] -= action.quantity
+        if (this.map[action.position].resources[action.itemName] <= 0) {
+          delete this.map[action.position].resources[action.itemName]
+        }
+        break
       case 'world/survey':
         this.survey(action.position)
         break
@@ -18,6 +25,13 @@ export class WorldModule  {
         break
       default:
     }
+  }
+
+  get blockResources () {
+    const availablePositions = Object.values(this.modules.character.characters).map(character => character.position).join(',')
+    return Object.entries(this.map).filter(entries => {
+      return availablePositions.includes(entries[0])
+    })
   }
 
   calDistance (positionA, positionB) {
@@ -40,19 +54,16 @@ export class WorldModule  {
     const name = pool[Math.floor(Math.random() * pool.length)]
     if (!this.map[key].resources[name]) this.map[key].resources[name] = 0
     this.map[key].resources[name] += 1000
+    this.context.dispatch({ type: 'discovery', name })
   }
 
-  get () {
+  valueOf () {
     return {
       map: this.map,
     }
   }
 
-  init ({ map = {} }) {
-    this.map = map
-  }
-
-  save() {
-    return this.get()
+  init ({ world = {} }) {
+    Object.assign(this, world)
   }
 }

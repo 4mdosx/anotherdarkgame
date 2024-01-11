@@ -1,0 +1,89 @@
+@font-face
+  font-family: "oldschool PC"
+  src: url("/font/Web437_PhoenixEGA_8x16.woff") format("woff")
+
+.console_wrap
+  user-select: none
+  position: fixed
+  right: .25rem
+  bottom: .25rem
+  border-radius: .5rem
+  overflow: hidden
+  .bios
+    font-family: "oldschool PC"
+    font-weight: bold
+    width: 30rem
+    height: 20rem
+    background-color: #000
+    color: #888
+    animation: glitch 2s linear 1
+    .command
+      margin: 0 1rem
+      margin-bottom: 5rem
+      li:hover
+        cursor: pointer
+        color: #000
+        background: #fced1e
+
+    .title span
+        color: rgb(252, 104, 163)
+    .state span
+      margin-right: .5rem
+    .screen
+      background-color: #000
+      color: #888
+      position: relative
+      padding: .5rem 1rem
+      top: 0
+      width: 100%
+      height: 100%
+      animation: boot .5s ease-in 1
+      border-right: 2px solid #888
+      border-bottom: 1px solid #888
+      border-left: 2px solid #444
+      border-top: 1px solid #444
+      &.focus
+        color: #fff
+        background-color: #005
+
+@keyframes boot
+  0%
+    top: 100%
+  100%
+    top: 0
+
+@keyframes glitch
+  3%
+    text-shadow: 7px 7px 0px red
+  6%
+    text-shadow: -9px 4px 0px blue
+    transform: translate(4px, -10px) skewX(230deg)
+  7%
+    text-shadow: 3px -4px 0px green
+  9%
+    text-shadow: 0px 0px 3px white
+    transform: translate(0px, 0px) skewX(0deg)
+  2%,
+  54%
+    transform: translateX(0px) skew(0deg)
+  55%
+    transform: translate(-2px, 6px) skew(-530deg)
+  56%
+    text-shadow: 0px 0px 3px white
+  57%
+    text-shadow: 7px 7px 0px red
+    transform: translate(4px, -10px) skew(-70deg)
+  58%
+    text-shadow: 0px 0px 3px white
+  62%
+    text-shadow: 3px -4px 0px green
+    transform: translate(0px, 20px) skew(0deg)
+  63%
+    text-shadow: 0px 0px 3px white
+    transform: translate(4px, -2px) skew(0deg)
+  64%
+    transform: translate(1px, 3px) skew(-230deg)
+  65%
+    transform: translate(-7px, 2px) skew(120deg)
+  66%
+    transform: translate(0px, 0px) skew(0deg)

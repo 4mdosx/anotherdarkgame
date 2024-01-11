@@ -6,8 +6,23 @@ export const buildings = {
     size: 'standard',
     keywords: ['consume_fuel'],
     time: 1,
-    effect: {}
-  }
+    effect: {},
+    menu: [{
+      name: '添柴',
+      event: 'add_fuel',
+    }]
+  },
+  workbench: {
+    name: '工作台',
+    size: 'standard',
+    keywords: ['workbench'],
+    cost: {
+      wood: 10,
+    },
+    time: 1,
+    effect: {},
+    menu: []
+  },
 }
 
 export class Building {
@@ -35,11 +50,7 @@ export class Building {
     return this.schema.effect
   }
 
-  toJSON () {
-    return this.data
-  }
-
-  get () {
+  valueOf () {
     return this.data
   }
 }
@@ -52,6 +63,20 @@ function consume_fuel (building) {
     }
     if (building.data.name === 'bonfire' && building.data.hope_count === undefined) {
       building.data.hope_count = 4
+    }
+  }
+
+  building.add_fuel = () => {
+    if (building.data.fuel.count < building.data.fuel.max) {
+      const { modules: { inventory } } = getContext()
+      const candidates = inventory.match('fuel')
+      const item = candidates.sort((a, b) => a[1].fuel - b[1].fuel)[0]
+      if (!item) return
+      const result = inventory.consume(item[0], 1)
+      if (result) {
+        building.data.fuel.count += item[1].fuel
+        if (building.data.fuel.count > building.data.fuel.max) building.data.fuel.count = building.data.fuel.max
+      }
     }
   }
 

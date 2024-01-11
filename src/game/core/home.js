@@ -1,4 +1,5 @@
 import { Building } from "../schema/building"
+
 export class HomeModule  {
   name = 'home'
   constructor () {
@@ -8,11 +9,12 @@ export class HomeModule  {
 
   dispatch (action) {
     switch (action.type) {
-      case 'task/finish':
-        const task = action.task
-        if (task.data.type === 'building') {
-          this.buildings.push(action.building)
-        }
+      case 'building/event':
+        const building = this.buildings.find(building => building.data.name === action.name)
+        building[action.event] && building[action.event](action)
+        break
+      case 'building/completed':
+        if (!action.is_upgrade) this.buildings.push(action.building)
         break
       case 'tick':
         break
@@ -20,18 +22,14 @@ export class HomeModule  {
     }
   }
 
-  get () {
-    return {
-      buildings: this.buildings.map(building => building.get()),
-    }
-  }
-
   init ({ home = {}}) {
     if (home.buildings) this.buildings = home.buildings.map(building => new Building(building))
   }
 
-  save () {
-    return this.get()
+  valueOf () {
+    return {
+      buildings: this.buildings.map(building => building.valueOf()),
+    }
   }
 }
 

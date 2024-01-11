@@ -1,26 +1,23 @@
 import { useStore } from '@/store/main.js'
+import { getGameStatus } from '@/game/utils/index.js'
 
-const Titles = [
-  'Items'
-]
-
-function Header () {
-  return (
-    <div className="header flex justify-between w-full">
-      <h1>{Titles[0]}</h1>
-      <span> 0 / 10</span>
-    </div>
-  )
-}
 export default function Storage () {
-  const bears = useStore((state) => state.bears)
+  const items = useStore((state) => state.items)
+  if (items.length === 0) return null
 
   return (
     <div className="storage">
-      <Header />
-      <div className="test flex justify-between">
-        bears: {bears}
-      </div>
+      <h1>Items</h1>
+      {
+        items.map(([key, count]) => {
+          return (
+            <div key={key} className="w-full flex justify-between">
+              <span>{key}</span>
+              <span>{count}/{ getGameStatus('MAX_STORAGE/' + key) }</span>
+            </div>
+          )
+        })
+      }
     </div>
   )
 }
